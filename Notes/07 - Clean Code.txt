@@ -1,0 +1,99 @@
+﻿Arquitetura .NET - Eduardo Pires
+==============================================================================================================
+
+Clean Code
+==============================================================================================================
+- Bjarne Stroustrup => Elegante e eficiente. Código limpo faz bem uma coisa.
+- Grady Booch => Simples e direto. Pode ser lido como uma conversa.
+- Michael Feathers => Parece ter sido escrito por alguém que se importa.
+- Ward Cunningham => Cada rotina que você lê faz o que você espera.
+- Martin Fowler => Qualquer tolo consegue escrever código que um computador entenda. Bons programadores escrevem código que humanos possam entender.
+
+O que é um código limpo?
+==============================================================================================================
+- Simples
+- Direto
+- Eficiente
+- Sem duplicidade
+- Elegante
+- Feito com cuidado
+- Fácil de ler
+
+Desculpas mais comuns:
+==============================================================================================================
+- Mas o cronograma está apertado!
+- Meu chefe me pressiona para entregar logo!
+- Quero mostrar produtividade.
+- Não ganho o suficiente para escrever o melhor código do mundo.
+- A empresa não valoriza bom código e sim a entrega.
+
+Verdades que não lhe dizem...
+==============================================================================================================
+- Sua carreira é sua responsabilidade!
+- Leia, Estude e Pratique.
+- Vá a conferências, eventos, meetups.
+- Faça cursos.
+- Não é da responsabilidade do seu empregador lhe oferecer cursos, oportunidades ou até mesmo um projeto com a tecnoogia que pretende se especializar.
+- Você recebe para trabalhar 40 horas por semana e resolver os problemas da sua empresa, não os seus...
+
+Quanto custa um código ruim?
+==============================================================================================================
+- Alta rotatividade
+- Demora na entrega das novas funcionalidades
+- Dificudade na manutenção
+- Alta incidência de bugs
+- Perda de confiança do cliente
+- Desmotivação profissional
+- Mais tempo depurando o código do que escrevendo
+
+Dicas:
+==============================================================================================================
+- Use nomes fáceis de se encontrar
+- Use nomes pronunciáveis
+- Evite siglas ou acrônomos
+- Não economize nas palavras
+- Revele a intenção do código
+- Evite palavras que podem ser variáveis ou palavras reservadas em outras plataformas
+- Evite dar nomes como "doubleValorPromocional", o tipo não precisa estar no nome
+- Evite trocadilhos não misture idioma, não mescle nomes.
+
+Boas práticas:
+==============================================================================================================
+- Nome de classes devem ser substantivos e não conter verbos. Exemplo: ClienteRepository
+- Nomes de métodos devem conter vermos de preferência no infinitivo. Exemplo: AdicionarCliente
+- Não seja genérico:
+// Processa folha de pagamento
+-- Processa(); => ProcessarFolhaPagamento();
+// Calcula Imposto de Renda
+-- Calcula(); => CalcularImpostoRenda();
+
+Métodos:
+==============================================================================================================
+- Extraia trechos e métodos privados.
+- Métodos devem fazer apenas uma coisa, fazê-la certa e somente fazê-la.
+- Evite muitos parâmetros.
+- Não deixe o método mentir dizendo que faz uma coisa e faz outras escondidas.
+- Se o método tiver mais de uma responsabilidade, extraia em dois ou mais.
+- Leia o seu método de cima pra baixo como uma narrativa ele deve fazer sentido.
+- Aplique uma boa identação.
+
+Comentários:
+==============================================================================================================
+- Comentários não vão ajudar a um código ruim ser melhor interpretado.
+- Um código que requer comentário, precisa ser reescrito.
+- Não deixe trechos do código comentado.
+
+Quando comentar?
+==============================================================================================================
+- Alertar consequências que podem vir a causar.
+- Licença, direitos autorais, etc.
+- Necessidade de aplicar uma regra do negócio interna.
+- Decisões de design de código
+
+Tratamento de erros
+==============================================================================================================
+- Tratar e prever possíveis excessões é responsabilidade do desenvolvedor.
+- Retorne exceptions e exeption.
+- Informe o máximo que puder em sua exception.
+- Não retorne "null"
+- Deixe a área de acampamento mais lima do que você encontrou.

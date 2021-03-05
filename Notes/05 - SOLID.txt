@@ -1,0 +1,173 @@
+﻿Arquitetura .NET - Eduardo Pires
+==============================================================================================================
+
+SOLID
+==============================================================================================================
+=> SOLID => É um acrônimo dos 5 primeiros princípios da programação orientada a objetos e design de código identificados por Unce Bob em meados dos anos 2000.
+
+- Os princípios SOLID devem ser aplicados para se obter benefícios da orientação a objetos, tais como:
+-- Seja fácil de se manter, adaptar e se ajustar às alterações de escopo;
+-- Seja testável e de fácil entendimento;
+-- Seja extensível para alterações com o menor esforço necessário;
+-- Que fornea o máximo de reaproveitamento;
+-- Que permaneça o máximo de tempo possível em utilização;
+
+- Utilizando os princípios SOLID é possível evitar problemas muito comuns:
+-- Dificuldade na testabilidade / criação de testes de unidade;
+-- Código macarrônico, sem estrutura ou padrão;
+-- Dificuldade de isolar funcionalidades;
+-- Duplicação de código, uma alteração precisa ser feita em N pontos;
+-- Fragilidade, o código quebra facilmente em vários pontos após alguma mudança;
+
+=> SRP => Single Responsability Principle
+- Uma classe deve ter um, e apenas um, motivo para ser modificada.
+- Exemplo de violação => Classe "Cliente" com várias responsabilidades:
+public class Cliente
+{
+    public int ClienteId { get; set; }
+    public string Nome { get; set; }
+    public string Email { get; set; }
+    public string CPF { get; set; }
+    public DateTime DataCadastro { get; set; }
+
+    public string AdicionarCliente()
+    {
+        if (!Email.Contains("@"))
+            return "Cliente com e-mail inválido";
+
+        if (CPF.Length != 11)
+            return "Cliente com CPF inválido";
+
+        using (var cn = new SqlConnection())
+        {
+            var cmd = new SqlCommand();
+
+            cn.ConnectionString = "MinhaConnectionString";
+            cmd.Connection = cn;
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "INSERT INTO CLIENTE (NOME, EMAIL CPF, DATACADASTRO) VALUES (@nome, @email, @cpf, @dataCad))";
+
+            cmd.Parameters.AddWithValue("nome", Nome);
+            cmd.Parameters.AddWithValue("email", Email);
+            cmd.Parameters.AddWithValue("cpf", CPF);
+            cmd.Parameters.AddWithValue("dataCad", DataCadastro);
+
+            cn.Open();
+            cmd.ExecuteNonQuery();
+        }
+
+        var mail = new MailMessage("empresa@empresa.com", Email);
+        var client = new SmtpClient
+        {
+            Port = 25,
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            UseDefaultCredentials = false,
+            Host = "smtp.google.com"
+        };
+
+        mail.Subject = "Bem Vindo.";
+        mail.Body = "Parabéns! Você está cadastrado.";
+        client.Send(mail);
+
+        return "Cliente cadastrado com sucesso!";
+    }
+}
+
+=> OCP => Open Closed Principle
+- Entidades de software (classes, módulos, funções, etc) devem estar abertas para extensão, mas fechadas para modificação.
+- Exemplo de violação => Classe "DebitoConta" onde ela mesma gerencia os tipos de conta:
+public class DebitoConta
+{
+    public void Debitar(decimal valor, string conta, TipoConta tipoConta)
+    {
+        if (tipoConta == TipoConta.Corrente)
+        {
+            // Debita Conta Corrente
+        }
+
+        if (tipoConta == TipoConta.Poupanca)
+        {
+            // Valida Aniversário da Conta
+            // Debita Conta Poupança
+        }
+    }
+}
+
+=> LSP => Liskov Substituition Principle
+- Subclasses devem ser substituíveis por suas Superclasses.
+- Exemplo de violação => Classe "Quadrado" herda de "Retangulo", porém o contrário não é correto:
+public class CalculoArea
+{
+    private static void ObterAreaRetangulo(Retangulo ret)
+    {
+        Console.Clear();
+        Console.WriteLine("Calculo da área do Retangulo");
+        Console.WriteLine();
+        Console.WriteLine(ret.Altura + " * " + ret.Largura);
+        Console.WriteLine();
+        Console.WriteLine(ret.Area);
+        Console.ReadKey();
+    }
+
+    public static void Calcular()
+    {
+        var quad = new Quadrado()
+        {
+            Altura = 10,
+            Largura = 5
+        };
+
+        ObterAreaRetangulo(quad);
+    }
+}
+
+=> ISP => Interface Segregation Principle
+- Clientes (classes) não devem ser forçados a depender de métodos que não usam. Muitas interfaces específicas são melhores do que uma única interface.
+- Exemplo de violação => Classe "CadastroProduto" que implementa "ICadastro", mas nem todos os métodos são necessários para seu funcionamento:
+namespace SOLID.ISP.Violacao
+{
+    public interface ICadastro
+    {
+        void ValidarDados();
+        void SalvarBanco();
+        void EnviarEmail();
+    }
+
+    public class CadastroProduto : ICadastro
+    {
+        public void ValidarDados()
+        {
+            // Validar valor
+        }
+
+        public void SalvarBanco()
+        {
+            // Insert tabela Produto
+        }
+
+        public void EnviarEmail()
+        {
+            // Produto não tem e-mail, o que eu faço agora???
+            throw new NotImplementedException("Esse metodo não serve pra nada");
+        }
+    }
+}
+
+=> DIP => Dependency Inversion Principle
+- Dependa de uma abstração e não de uma implementação.
+- Exemplo de violação => Classe "ClienteService" dependendo de implementação dos serviços e repositórios:
+public class ClienteService
+{
+    public string AdicionarCliente(Cliente cliente)
+    {
+        if (!cliente.Validar())
+            return "Dados inválidos";
+
+        var repo = new ClienteRepository();
+        repo.AdicionarCliente(cliente);
+
+        EmailServices.Enviar("empresa@empresa.com", cliente.Email.Endereco, "Bem Vindo", "Parabéns está Cadastrado");
+
+        return "Cliente cadastrado com sucesso";
+    }
+}

@@ -1,0 +1,135 @@
+﻿Arquitetura .NET - Eduardo Pires
+==============================================================================================================
+
+OOP
+==============================================================================================================
+- É essencial possuir um claro conhecimento dos princípios da orientação a objetos para poder aplicar as melhores práticas de design de código, padrões e abordagens de arquitetura.
+- Na orientação a objetos devemos sempre buscar o baixo acoplamento e alta coesão.
+
+Acoplamento: Uma dependência direta entre um objeto e outro. Quando um objeto muda o outro muda por consequência.
+Coesão: Objetos executanto uma única responsabilidade, livres de uma dependência com um outro objeto.
+
+=> Estado => Propriedades (Dados da instância da classe)
+
+=> Comportamento => Métodos (Manipulação dos dados/estados da classe)
+
+=> Herança => Extensão das propriedades e métodos.
+
+=> Abstração
+- Classe abstrata não permite instância, apenas herança. Fornece formas genéricas de comportamento. Conceito de Super Classe.
+- Métodos abstrados não são obrigados a implementar na classe base.
+- Métodos virtual: Tem comportamento pré definido, porém pode ser sobrescrito.
+    public abstract class Eletrodomestico
+    {
+        private readonly string _nome;
+        private readonly int _voltagem;
+        protected Eletrodomestico(string nome, int voltagem)
+        {
+            _nome = nome;
+            _voltagem = voltagem;
+        }
+
+        public abstract void Ligar();
+        public abstract void Desligar();
+
+        public virtual void Testar()
+        {
+            // teste do equipamento
+        }
+    }
+
+=> Polimorfismo
+- Consiste no princípio pelo qual duas ou mais classes derivadas de uma mesma superclasse podem invocar métodos que têm a mesma identificação (assinatura) mas comportamentos 
+distintos, especializados para cada classe.
+- Múltiplos comportamentos para alguma coisa.
+    public class CafeteiraEspressa : Eletrodomestico
+    {
+        public CafeteiraEspressa(string nome, int voltagem)
+            : base(nome, voltagem) { }
+
+        public CafeteiraEspressa()
+            : base("Padrao", 220) {  }
+
+        private static void AquecerAgua() { }
+
+        private static void MoerGraos() { }
+
+        public void PrepararCafe()
+        {
+            Testar();
+            AquecerAgua();
+            MoerGraos();
+            // ETC...
+        }
+
+        public override void Testar()
+        {
+            // teste de cafeteira
+        }
+
+        public override void Ligar()
+        {
+            // Verificar recipiente de agua
+        }
+
+        public override void Desligar()
+        {
+            // Resfriar aquecedor
+        }
+    }
+
+Encapsulamento => 
+- Elementos que adicionam organização e segurança à aplicação em uma programação orientada a objetos, podendo esconder as propriedades/métodos, criando uma espécie de caixa preta.
+
+    public class AutomacaoCafe
+    {
+        public void ServirCafe()
+        {
+            var espresso = new CafeteiraEspressa();
+            espresso.Ligar();
+            espresso.PrepararCafe();
+            espresso.Desligar();
+        }
+    }
+
+Modificadores => 
+- Public: Acesso sem restrição
+- Protected: Utilizado apenas pela classe que está herdando.
+- Internal: Acesso limitado apenas ao assembly.
+- Protected Internal: Acesso limitado apenas ao assembly ou quem está herdando.
+- Private: Acesso limitado ao mesmo tipo, sendo métodos da mesma classe. No caso de uma classe não pode ser chamada diretamente.
+- Private Protected: Acesso limitado as classes que fazem herança ou estão dentro do mesmo assembly.
+- Sealed: Classe que nunca pode ser herdada, apenas instanciada.
+
+
+Interface x Implementação => 
+- Procurar usar sempre uma interface no lugar de uma implementação da classe concreta.
+
+
+Herança x Composição => 
+- Interface especializada é melhor do que inter genérica´.
+
+public class PessoaFisica : Pessoa // Herança
+{
+	public string Cpf { get; set; }
+}
+
+public class PessoaFisica2 // Composição
+{
+	public Pessoa Pessoa { get; set; }
+	public string Cpf { get; set; }
+}
+
+====================================================================================
+
+public interface IRepositorio<T> // Interface genérica
+{
+	void Adicionar(T obj);
+
+	void Excluir(T obj);
+}
+
+public interface IRepositorioPessoa // Interface especializada
+{
+	void Adicionar(Pessoa obj);
+}

@@ -1,0 +1,16 @@
+﻿Arquitetura .NET - Eduardo Pires
+==============================================================================================================
+
+Introdução
+==============================================================================================================
+Arquitetura é a organização fundamental de um sistema incorporada em seis componentes, relacionamentos com o ambiente e os princípios que conduzem o seu design e evolução.
+
+Documentações/Padrões
+- TOGAF
+- ISO 42010
+
+Resumo módulos
+==============================================================================================================
+- Arquitetura I - Perfil Arquiteto, fundamentos básicos e princípio de arquitetura
+- Arquitetura II - Padrões de arquitetura, DDD, CQRS, modelagem e estratégias
+- Arquitetura III - Qualidade, Testes de Unidade e Integração, TDD e BDD.

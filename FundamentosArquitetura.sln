@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOP", "OOP\OOP.csproj", "{D54E1459-7D72-4184-8BBE-8E51EA171EC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - OOP", "01 - OOP", "{D08B8B7C-D7D8-4806-8319-595AE9F4B1A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Modificadores", "02 - Modificadores", "{C18D9CAB-9AFA-4863-A0FA-6941E6E77CC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetoA", "ProjetoA\ProjetoA.csproj", "{CF36D16A-BFA9-49CB-B88C-F9188A87388F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetoB", "ProjetoB\ProjetoB.csproj", "{02C0F6B3-0D4B-48C1-8BFE-BDE50FC11BB6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - SOLID", "03 - SOLID", "{7FBCE0C9-0BCE-401C-9002-5DAD2AD4562C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOLID", "SOLID\SOLID.csproj", "{7B15EE54-9406-40BB-8CE7-CF104F04AFAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - Design Patterns", "05 - Design Patterns", "{F8436AB5-209E-4E0B-9178-5617F0A6D4CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - DI", "04 - DI", "{A1B29F48-3E18-48C6-B12C-75DB8E688392}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesignPatterns", "DesignPatterns\DesignPatterns.csproj", "{04458335-BD7D-4E10-A11C-A67C3CAE652B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{5A3A70CF-CE2F-4046-B5C3-16B03FB46C9E}"
+	ProjectSection(SolutionItems) = preProject
+		Notes\01 - Introdução.txt = Notes\01 - Introdução.txt
+		Notes\02 - Perfis de Arquitetos.txt = Notes\02 - Perfis de Arquitetos.txt
+		Notes\03 - Perfil do Arquiteto de Software.txt = Notes\03 - Perfil do Arquiteto de Software.txt
+		Notes\04 - OOP.txt = Notes\04 - OOP.txt
+		Notes\05 - SOLID.txt = Notes\05 - SOLID.txt
+		Notes\06 - Dependency Injection.txt = Notes\06 - Dependency Injection.txt
+		Notes\07 - Clean Code.txt = Notes\07 - Clean Code.txt
+		Notes\08 - Design Patterns.txt = Notes\08 - Design Patterns.txt
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoUI", "DemoUI\DemoUI.csproj", "{C3B9DEFD-1BED-44CB-A88F-AB769FBC09E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D54E1459-7D72-4184-8BBE-8E51EA171EC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D54E1459-7D72-4184-8BBE-8E51EA171EC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D54E1459-7D72-4184-8BBE-8E51EA171EC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D54E1459-7D72-4184-8BBE-8E51EA171EC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF36D16A-BFA9-49CB-B88C-F9188A87388F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF36D16A-BFA9-49CB-B88C-F9188A87388F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF36D16A-BFA9-49CB-B88C-F9188A87388F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF36D16A-BFA9-49CB-B88C-F9188A87388F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C0F6B3-0D4B-48C1-8BFE-BDE50FC11BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C0F6B3-0D4B-48C1-8BFE-BDE50FC11BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C0F6B3-0D4B-48C1-8BFE-BDE50FC11BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C0F6B3-0D4B-48C1-8BFE-BDE50FC11BB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B15EE54-9406-40BB-8CE7-CF104F04AFAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B15EE54-9406-40BB-8CE7-CF104F04AFAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B15EE54-9406-40BB-8CE7-CF104F04AFAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B15EE54-9406-40BB-8CE7-CF104F04AFAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04458335-BD7D-4E10-A11C-A67C3CAE652B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04458335-BD7D-4E10-A11C-A67C3CAE652B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04458335-BD7D-4E10-A11C-A67C3CAE652B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04458335-BD7D-4E10-A11C-A67C3CAE652B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3B9DEFD-1BED-44CB-A88F-AB769FBC09E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3B9DEFD-1BED-44CB-A88F-AB769FBC09E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3B9DEFD-1BED-44CB-A88F-AB769FBC09E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3B9DEFD-1BED-44CB-A88F-AB769FBC09E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D54E1459-7D72-4184-8BBE-8E51EA171EC6} = {D08B8B7C-D7D8-4806-8319-595AE9F4B1A0}
+		{CF36D16A-BFA9-49CB-B88C-F9188A87388F} = {C18D9CAB-9AFA-4863-A0FA-6941E6E77CC9}
+		{02C0F6B3-0D4B-48C1-8BFE-BDE50FC11BB6} = {C18D9CAB-9AFA-4863-A0FA-6941E6E77CC9}
+		{7B15EE54-9406-40BB-8CE7-CF104F04AFAB} = {7FBCE0C9-0BCE-401C-9002-5DAD2AD4562C}
+		{04458335-BD7D-4E10-A11C-A67C3CAE652B} = {F8436AB5-209E-4E0B-9178-5617F0A6D4CE}
+		{C3B9DEFD-1BED-44CB-A88F-AB769FBC09E4} = {A1B29F48-3E18-48C6-B12C-75DB8E688392}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5C4F91B-950A-453A-BE70-7F9B36F00372}
+	EndGlobalSection
+EndGlobal

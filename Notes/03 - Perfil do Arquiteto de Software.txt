@@ -1,0 +1,35 @@
+﻿Arquitetura .NET - Eduardo Pires
+==============================================================================================================
+
+Perfil do Arquiteto de Software
+==============================================================================================================
+- O objetivo principal de um arquiteto de software é projetar uma solução compatível com os requisitos atuais da corporação, que tenha flexibilidade suficiente para comportar 
+mudanças futuras e/ou novos requisitos resultantes de sua evolução ao longo do tempo.
+- Ser responsávei pela qualidade técnica do entregável, atuar no apoio técnico de toda equipe e ajudar nas decisões necessárias.
+- Promover comunicação do time, envolvendo e delegando as decisões de arquitetura com toda equipe.
+
+Requisitos técnicos:
+- O principal requisito técnico de um arquiteto de software é um profundo conhecimento em programação e componentização. Conhecimentos adquiridos através de experiências sólidas em projetos.
+- Dominar amplamente aguma plataforma de desenvolvimento, frameworks, ferramentas e modelagem técnica.
+- Conhecer abordagens de arquitetura e padrões de soluções de problemas.
+- Conhecer técnicas de design de código e qualidade para gerar uma boa cobertura de testes.
+
+Requisitos pessoais:
+- Experiência (trabalho e estudo), liderança, comunicação, proatividade, mindset empreendedor, iniciativa, humildade.
+- Tomar boas decisões e estar aberto para críticas e sugestões.
+- Ser didático, um profundo pesquisador.
+- Saber delegar tarefas, questionar, conduzir discussões, conversar com diferentes níveis hierárquicos.
+- Estar sempre aberto às novas tecnologias e atualizado com o mercado.
+- Ter maturidade, equilíbrio funcional e ter pensamento estratégico.
+- Reconhecer e assumir erros.
+
+Mitos sobre o arquiteto de software:
+- Arquiteto não programa, só projeta, documenta e lidera.
+- Um desenvolvedor sênior pode assumir o papel de arquiteto.
+- O arquiteto é um desenvolvedor com muito tempo de experiência.
+- Para ser arquiteto basta estudar técnicas de arquitetura de software.
+- O arquiteto trabalha em um ambiente isolado ou diferenciado da equipe.
+- O arquiteto é a autoridade técnica e não deve ser questionado.
+- O arquiteto é um gerente técnico.
+- O arquiteto é um profissional com graduação em arquitetura de software.
+- O arquiteto é o profissional que está na liderança de um projeto.

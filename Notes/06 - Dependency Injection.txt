@@ -1,0 +1,65 @@
+﻿Arquitetura .NET - Eduardo Pires
+==============================================================================================================
+
+Dependency Injection - Tópicos avançados
+==============================================================================================================
+- Serão abordados os temas: 
+=> Exemplo real
+=> Ciclo de Vida
+=> Generics
+=> Property Injection (From Services)
+=> Service Locator
+=> Multiplas Implementações
+
+- Procurar usar sempre o nativo do .NET Core ou quando não tiver o recurso, olhar os comparativos mais atualizados de qual FW atende melhor.
+
+- Transient => Mais comum de ser utilizado quando não se sabe a melhor opção. Funciona bem com objetos leves, sem estado. Por criar sempre uma nova instância aloca mais espaço na memória.
+- Scoped => São criados uma vez por client request (conexão). É o melhor a ser utilizado em uma aplicação web.
+- Singleton => Cria uma única instância para toda a aplicação, modelo mais perigoso.
+
+=> Generics
+==============================================================================================================
+services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+=> Property Injection => Injetar diretamente no método quando for muito complicado alterar o construtor da classe.
+==============================================================================================================
+public class FromServicesController : Controller
+{
+    public void Index([FromServices] IClienteServices clienteServices)
+    {
+        clienteServices.AdicionarCliente(new Cliente());
+    }
+}
+
+=> Service Locator => Difícil de testar, não recomendável. No exemplo abaixo o GetRequiredService() captura a instância injetada.
+==============================================================================================================
+// Retorna null se não estiver registrado
+_serviceProvider.GetRequiredService<IClienteServices>().AdicionarCliente(new Cliente());
+
+=> N Classes : 1 Interface => Fere o SOLID mas é possível
+==============================================================================================================
+- Registra o serviço por chave
+services.AddTransient<ServiceA>();
+services.AddTransient<ServiceB>();
+services.AddTransient<ServiceC>();
+services.AddTransient<Func<string, IService>>(serviceProvider => key =>
+{
+    switch (key)
+    {
+        case "A":
+            return serviceProvider.GetService<ServiceA>();
+        case "B":
+            return serviceProvider.GetService<ServiceB>();
+        case "C":
+            return serviceProvider.GetService<ServiceC>();
+        default:
+            return null;
+    }
+});
+
+public string Index()
+{
+    return _serviceAccessor("A").Retorno();
+    //return _serviceAccessor("B").Retorno();
+    //return _serviceAccessor("C").Retorno();
+}

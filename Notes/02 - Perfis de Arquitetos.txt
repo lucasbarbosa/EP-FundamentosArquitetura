@@ -1,0 +1,26 @@
+﻿Arquitetura .NET - Eduardo Pires
+==============================================================================================================
+
+Perfis de Arquitetos
+==============================================================================================================
+Arquiteto é um especialista em solução para o desenvolvimento. Possui uma visão madura e aguçada.
+
+- Arquiteto coorporativo: Apoia a estratégia e negócio da organização com soluções que envolvem tecnologia e informações.
+Responsável pela estratégia global sobre capacidades de TI, bem como garangir que a arquitetura de TI seja rentável.
+
+- Arquiteto negócio: Trabalha muito próximo ao negócio e entende detalhadamente como funciona a organização. Presente na modelagem de processos 
+da organização, e dão suporte para definir arquiteturas, realizando a análise de requisitos de soluções novas ou existentes.
+
+- Arquiteto solução: Possuem responsabilidades especiais para serviços e funções de reusabilidade. Alinham novas soluções para os princípios
+arquiteturais definidos em uma organização e as relaciona com foco em integração. Equiiba requisitos funcionais e não funcionais de acordo
+com as prioridades da empresa.
+
+- Arquiteto software: Trabalha com a estrutura e o design do software, com foco principalmente no projeto. É esperado que esse profissional
+tenha profundos conhecimentos em programação, frameworks, padrões e modelagem técnica.
+
+- Outros:
+- Arquiteto de Dados
+- Arquiteto de TI
+- Arquiteto de Nuvem
+- Etc. Em geral esses perfis são criados pelas próprias empresas para enquadrar seus profissionais conforme sua visão. (Na maioria das vezes para equiparação salarial)
+Muitos desses perfis se encaixam em alguns dos previamente apresentados.
