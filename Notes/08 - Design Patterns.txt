@@ -12,6 +12,264 @@ Design Patterns
 
 Padrões e famílias
 ==============================================================================================================
-=> Creational Patterns - Fornecem meios de criação de um objeto e de como ele será instanciado.
-=> Structural Patterns - Tratam da composição de objetos por heranças e interfaces para diferentes funcionalidades.
-=> Behavioral Patterns - Tratam das interações e comunicação entre os objetos além da visão de responsabilidades.
+=> (C) Creational Patterns - Fornecem meios de criação de um objeto e de como ele será instanciado.
+=> (S) Structural Patterns - Tratam da composição de objetos por heranças e interfaces para diferentes funcionalidades.
+=> (B) Behavioral Patterns - Tratam das interações e comunicação entre os objetos além da visão de responsabilidades.
+
+=> (C) Abstract Factory - Cria uma instância de diversas famílias de classes.
+==============================================================================================================
+public class VeiculoCreator
+{
+    public static Veiculo Criar(string modelo, Porte porte)
+    {
+        switch (porte)
+        {
+            case Porte.Pequeno:
+                return new VeiculoPequeno(modelo, porte);
+            case Porte.Medio:
+                return new VeiculoMedio(modelo, porte);
+            case Porte.Grande:
+                return new VeiculoGrande(modelo, porte);
+            default:
+                throw new ApplicationException("Porte de veiculo desconhecido.");
+        }
+    }
+}
+
+public class ExecucaoAbstractFactory
+{
+    public static void Executar()
+    {
+        var veiculosSocorro = new List<Veiculo>
+        {
+            VeiculoCreator.Criar("Celta", Porte.Pequeno),
+            VeiculoCreator.Criar("Jetta", Porte.Medio),
+            VeiculoCreator.Criar("BMW X6", Porte.Grande)
+        };
+
+        veiculosSocorro.ForEach(v => AutoSocorro.CriarAutoSocorro(v).RealizarAtendimento());
+    }
+}
+
+
+=> (C) Factory Method - Cria uma instância de diversas derivações da classes.
+==============================================================================================================
+// Abstract Creator
+public abstract class DbFactory
+{
+    // Factory Method
+    public abstract DbConnector CreateConnector(string connectionString);
+
+    public static DbFactory Database(DataBase dataBase)
+    {
+        if(dataBase == DataBase.SqlServer)
+            return new SqlFactory();
+        if(dataBase == DataBase.Oracle)
+            return new OracleFactory();
+
+        throw new ApplicationException("Banco de dados não reconhecido.");
+    }
+}
+
+public class ExecucaoFactoryMethod
+{
+    public static void Executar()
+    {
+        var sqlCn = DbFactory.Database(DataBase.SqlServer)
+                                .CreateConnector("minhaCS")
+                                .Connect();
+
+        sqlCn.ExecuteCommand("select * from tabelaSql");
+        sqlCn.Close();
+
+        Console.WriteLine("");
+        Console.WriteLine("--------------------------------");
+        Console.WriteLine("");
+
+        var oracleCn = DbFactory.Database(DataBase.Oracle)
+                                .CreateConnector("minhaCS")
+                                .Connect();
+
+        oracleCn.ExecuteCommand("select * from tabelaOracle");
+        oracleCn.Close();
+    }
+}
+
+=> (C) Singleton - Cria uma única instância que será utilizada por todos os recursos.
+==============================================================================================================
+internal sealed class LoadBalancer
+{
+    private static readonly LoadBalancer Instance = new LoadBalancer();
+
+    private readonly List<Server> _servers;
+    private readonly Random _random = new Random();
+
+    private LoadBalancer()
+    {
+        _servers = new List<Server>
+        {
+                new Server{ Id=Guid.NewGuid(),  Name = "ServerI", IP = "120.14.220.18" },
+                new Server{ Id=Guid.NewGuid(), Name = "ServerII", IP = "120.14.220.19" },
+                new Server{ Id=Guid.NewGuid(), Name = "ServerIII", IP = "120.14.220.20" },
+                new Server{ Id=Guid.NewGuid(), Name = "ServerIV", IP = "120.14.220.21" },
+                new Server{ Id=Guid.NewGuid(), Name = "ServerV", IP = "120.14.220.22" },
+        };
+    }
+
+    public static LoadBalancer GetLoadBalancer()
+    {
+        return Instance;
+    }
+
+    public Server NextServer
+    {
+        get
+        {
+            var r = _random.Next(_servers.Count);
+            return _servers[r];
+        }
+    }
+}
+
+public class ExecucaoSingleton
+{
+    public static void Executar()
+    {
+        var b1 = LoadBalancer.GetLoadBalancer();
+        var b2 = LoadBalancer.GetLoadBalancer();
+        var b3 = LoadBalancer.GetLoadBalancer();
+        var b4 = LoadBalancer.GetLoadBalancer();
+
+        if (b1 == b2 && b2 == b3 && b3 == b4)
+        {
+            Console.WriteLine("Mesma instância\n");
+        }
+
+        var balancer = LoadBalancer.GetLoadBalancer();
+
+        for (var i = 0; i < 15; i++)
+        {
+            var serverName = balancer.NextServer.Name;
+            Console.WriteLine("Disparando request para: " + serverName);
+        }
+    }
+}
+
+=> (S) Adapter - Compatibiliza objetos de interfaces diferentes.
+==============================================================================================================
+// Adapter class
+public class LogAdapter : ILogger
+{
+    private readonly ILogNetMaster _logNetMaster;
+
+    public LogAdapter(ILogNetMaster logNetMaster)
+    {
+        _logNetMaster = logNetMaster;
+    }
+
+    public void Log(string message)
+    {
+        _logNetMaster.LogInfo(message);
+    }
+
+    public void LogError(Exception exception)
+    {
+        _logNetMaster.LogException(exception);
+    }
+}
+
+public class ExecucaoAdapter
+{
+    public static void Executar()
+    {
+        var pagamentoLogPadrao = new TransacaoService(new Logger());
+        pagamentoLogPadrao.RealizarTransacao();
+
+        var pagamentoLogCustom = new TransacaoService(new LogAdapter(new LogNetMasterService()));
+        pagamentoLogCustom.RealizarTransacao();
+    }
+}
+
+=> (S) Facade - Uma única classe que representa um subsistema.
+==============================================================================================================
+public class PagamentoCartaoCreditoService : IPagamento
+{
+    private readonly IPagamentoCartaoCreditoFacade _pagamentoCartaoCreditoFacade;
+
+    public PagamentoCartaoCreditoService(IPagamentoCartaoCreditoFacade pagamentoCartaoCreditoFacade)
+    {
+        _pagamentoCartaoCreditoFacade = pagamentoCartaoCreditoFacade;
+    }
+
+    public Pagamento RealizarPagamento(Pedido pedido, Pagamento pagamento)
+    {
+        pagamento.Valor = pedido.Produtos.Sum(p => p.Valor);
+        Console.WriteLine("Iniciando Pagamento via Cartão de Crédito - Valor R$ " + pagamento.Valor);
+
+        if (_pagamentoCartaoCreditoFacade.RealizarPagamento(pedido, pagamento))
+        {
+            pagamento.Status = "Pago via Cartão de Crédito";
+            return pagamento;
+        }
+
+        pagamento.Status = "Cartão de Crédito Recusado!";
+        return pagamento;
+    }
+}
+
+public class PagamentoCartaoCreditoFacade : IPagamentoCartaoCreditoFacade
+{
+    private readonly IPayPalGateway _payPalGateway;
+    private readonly IConfigurationManager _configManager;
+
+    public PagamentoCartaoCreditoFacade(IPayPalGateway payPalGateway, IConfigurationManager configManager)
+    {
+        _payPalGateway = payPalGateway;
+        _configManager = configManager;
+    }
+
+    public bool RealizarPagamento(Pedido pedido, Pagamento pagamento)
+    {
+        var apiKey = _configManager.GetValue("apiKey");
+        var encriptionKey = _configManager.GetValue("encriptionKey");
+
+        var serviceKey = _payPalGateway.GetPayPalServiceKey(apiKey, encriptionKey);
+        var cardHashKey = _payPalGateway.GetCardHashKey(serviceKey, pagamento.CartaoCredito);
+
+        var pagamentoResult = _payPalGateway.CommitTransaction(cardHashKey, pedido.Id.ToString(), pagamento.Valor);
+
+        return pagamentoResult;
+    }
+}
+
+=> (S) Composite - Compartilha um objeto em estruturas de árvores que representam hierarquias.
+==============================================================================================================
+public class Mensagem : IMessage, IEnumerable<IMessage>
+{
+    private readonly List<IMessage> _lista = new List<IMessage>();
+
+    public string Nome { get; set; }
+
+    public Mensagem(string nome)
+    {
+        Nome = nome;
+    }
+}
+
+public class ExecucaoComposite
+{
+    public static void Executar()
+    {
+        var validacaoCadastro = new Mensagem("O cadastro não foi realizado!");
+
+        var usuarioFormErro = new Mensagem("O usuário informou um nome inválido");
+
+        var tamanhoNomeForm = new InputFormMessage("O nome precisa possuir mais de 2 caracteres");
+        var nomeVazioForm = new InputFormMessage("O nome não pode possuir numeros");
+
+        usuarioFormErro.AdicionarFilha(tamanhoNomeForm);
+        usuarioFormErro.AdicionarFilha(nomeVazioForm);
+
+        validacaoCadastro.AdicionarFilha(usuarioFormErro);
+    }
+}

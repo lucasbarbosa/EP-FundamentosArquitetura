@@ -33,5 +33,4 @@ namespace DesignPatterns
             Console.WriteLine(pagamentoResult.Status);
         }
     }
-
 }
