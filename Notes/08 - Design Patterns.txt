@@ -273,3 +273,265 @@ public class ExecucaoComposite
         validacaoCadastro.AdicionarFilha(usuarioFormErro);
     }
 }
+
+=> (B) Command - Encapsula um command request em um objeto.
+==============================================================================================================
+internal class Calculadora
+{
+    private int _valorAtual;
+
+    public void Operacao(char operador, int valor)
+    {
+        switch (operador)
+        {
+            case '+': _valorAtual += valor; break;
+            case '-': _valorAtual -= valor; break;
+            case '*': _valorAtual *= valor; break;
+            case '/': _valorAtual /= valor; break;
+        }
+        Console.WriteLine("(dado {1} {2}) - Valor atual = {0,3}", _valorAtual, operador, valor);
+    }
+}
+
+public class Usuario
+{
+    // Initializers
+    private readonly Calculadora _calculadora = new Calculadora();
+    private readonly List<Commander> _commands = new List<Commander>();
+    private int _total;
+
+    public void Adicionar(char operador, int valor)
+    {
+        Commander command = new CalculadoraCommand(_calculadora, operador, valor);
+        command.Executar();
+
+        _commands.Add(command);
+        _total++;
+    }
+
+    public void Retornar(int niveis)
+    {
+        Console.WriteLine("\n---- Retornando {0} níveis ", niveis);
+
+        for (var i = 0; i < niveis; i++)
+        {
+            if (_total >= _commands.Count - 1) continue;
+            var command = _commands[_total++];
+            command.Executar();
+        }
+    }
+
+    public void Desfazer(int niveis)
+    {
+        Console.WriteLine("\n---- Desfazendo {0} níveis ", niveis);
+
+        for (var i = 0; i < niveis; i++)
+        {
+            if (_total <= 0) continue;
+            var command = _commands[--_total];
+            command.Desfazer();
+        }
+    }
+}
+
+public class ExecucaoCommand
+{
+    public static void Executar()
+    {
+        var user = new Usuario();
+
+        user.Adicionar('+', 100);
+        Console.ReadKey();
+        user.Adicionar('-', 50);
+        Console.ReadKey();
+        user.Adicionar('*', 10);
+        Console.ReadKey();
+        user.Adicionar('/', 2);
+        Console.ReadKey();
+
+        user.Desfazer(4);
+        Console.ReadKey();
+
+        user.Retornar(3);
+    }
+}
+
+=> (B) Strategy - Encapsula um algoritmo dentro de uma classe.
+==============================================================================================================
+public class PedidoService
+{
+    private readonly IPagamento _pagamento;
+        
+    public PedidoService(IPagamento pagamento)
+    {
+        _pagamento = pagamento;
+    }
+
+    public Pagamento RealizarPagamento(Pedido pedido, Pagamento pagamento)
+    {
+        return _pagamento.RealizarPagamento(pedido, pagamento);
+    }
+}
+
+public class PagamentoTransferenciaService : IPagamento
+{
+    private readonly IPagamentoTransferenciaFacade _pagamentoTransferenciaFacade;
+
+    public PagamentoTransferenciaService(IPagamentoTransferenciaFacade pagamentoTransferenciaFacade)
+    {
+        _pagamentoTransferenciaFacade = pagamentoTransferenciaFacade;
+    }
+
+    public Pagamento RealizarPagamento(Pedido pedido, Pagamento pagamento)
+    {
+        pagamento.Valor = pedido.Produtos.Sum(p => p.Valor);
+        Console.WriteLine("Iniciando Pagamento via Transferência - Valor R$ " + pagamento.Valor);
+
+        pagamento.ConfirmacaoTransferencia = _pagamentoTransferenciaFacade.RealizarTransferencia();
+        pagamento.Status = "Pago via Transferência";
+        return pagamento;
+    }
+}
+
+public class ExecucaoStrategy
+{
+    public static void Executar()
+    {
+        var produtos = new List<Produto>
+        {
+            new Produto{Nome = "Tenis Adidas", Valor = new Random().Next(500)},
+            new Produto{Nome = "Camisa Boliche", Valor = new Random().Next(500)},
+            new Produto{Nome = "Raquete Tenis", Valor = new Random().Next(500)}
+        };
+
+        var pedido = new Pedido
+        {
+            Id = Guid.NewGuid(),
+            Produtos = produtos
+        };
+
+        var meioPagamentoTransferencia = new Pagamento
+        {
+            MeioPagamento = MeioPagamento.TransferenciaBancaria,
+            CartaoCredito = "5555 2222 5555 9999"
+        };
+
+        var pedidoTransferencia2 = new PedidoService(PagamentoFactory.CreatePagamento(meioPagamentoTransferencia.MeioPagamento));
+        var pagamentoTransferencia2 = pedidoTransferencia2.RealizarPagamento(pedido, meioPagamentoTransferencia);
+        Console.WriteLine(pagamentoTransferencia2.Status);
+    }
+}
+
+=> (B) Observer - Uma forma de notificar mudanças a uma séria de classe.
+==============================================================================================================
+public static class ExecucaoObserver
+{
+    public static void Executar()
+    {
+        var joao = new Observador("João");
+        var eduardo = new Observador("Eduardo");
+        var bill = new Observador("Bill");
+
+        var amazon = new PapelBovespa("Amazon", NextDecimal());
+        var microsoft = new PapelBovespa("Microsoft", NextDecimal());
+            
+        amazon.Subscribe(joao);
+        amazon.Subscribe(eduardo);
+
+        microsoft.Subscribe(eduardo);
+        microsoft.Subscribe(bill);
+
+        Console.WriteLine("");
+        Console.WriteLine("------------------");
+        Console.WriteLine("");
+
+        for (int i = 0; i < 5; i++)
+        {
+            amazon.Valor = NextDecimal();
+            microsoft.Valor = NextDecimal();
+
+            if (i == 1)
+            {
+                amazon.UnSubscribe(eduardo);
+            }
+        }
+    }
+
+    public static decimal NextDecimal()
+    {
+        var random = new Random();
+        var r = random.Next(141421, 314160);
+        return r / (decimal) 100000.00;
+    }
+}
+
+// Subject
+public abstract class Investimento
+{
+    private decimal _valor;
+    private readonly List<IObservador> _observadores = new List<IObservador>();
+
+    protected Investimento(string simbolo, decimal valor)
+    {
+        Simbolo = simbolo;
+        _valor = valor;
+    }
+
+    public string Simbolo { get; }
+    public decimal Valor
+    {
+        get => _valor;
+        set
+        {
+            if (_valor == value) return;
+
+            _valor = value;
+            Notificar();
+        }
+    }
+
+
+    public void Subscribe(IObservador observador)
+    {
+        _observadores.Add(observador);
+        Console.WriteLine($"Notificando que {observador.Nome} está recebendo atualizãções de {Simbolo}");
+    }
+
+    public void UnSubscribe(IObservador observador)
+    {
+        _observadores.Remove(observador);
+        Console.WriteLine($"Notificando que {observador.Nome} NÃO está recebendo atualizãções de {Simbolo}");
+    }
+
+    private void Notificar()
+    {
+        foreach (var investor in _observadores)
+        {
+            investor.Notificar(this);
+        }
+
+        Console.WriteLine("");
+    }
+}
+
+// Concrete Observer
+internal class Observador : IObservador
+{
+    public Observador(string nome)
+    {
+        Nome = nome;
+    }
+
+    public string Nome { get; }
+
+    public void Notificar(Investimento investimento)
+    {
+        Console.WriteLine("Notificando {0} que {1} " + "teve preço alterado para {2:C}", Nome, investimento.Simbolo, investimento.Valor);
+    }
+}
+
+Evite o Patternite
+==============================================================================================================
+- Patternite é o mal que o desenvolvedor sofre quando deseja aplicar todos os patterns conhecidos apenas para praticar ou por entender que quanto mais patterns melhor.
+- Não utilize sem conhecer.
+- Apesar de conhecer só utilize se necessário.

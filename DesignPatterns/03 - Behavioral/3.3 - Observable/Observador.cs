@@ -14,10 +14,7 @@ namespace DesignPatterns
 
         public void Notificar(Investimento investimento)
         {
-            Console.WriteLine("Notificando {0} que {1} " +
-                              "teve preço alterado para {2:C}", Nome, investimento.Simbolo, investimento.Valor);
+            Console.WriteLine("Notificando {0} que {1} " + "teve preço alterado para {2:C}", Nome, investimento.Simbolo, investimento.Valor);
         }
-
-
     }
 }
