@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{5A3A70CF
 		Notes\06 - Dependency Injection.txt = Notes\06 - Dependency Injection.txt
 		Notes\07 - Clean Code.txt = Notes\07 - Clean Code.txt
 		Notes\08 - Design Patterns.txt = Notes\08 - Design Patterns.txt
+		Notes\09 - Arquitetura de Software.txt = Notes\09 - Arquitetura de Software.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoUI", "DemoUI\DemoUI.csproj", "{C3B9DEFD-1BED-44CB-A88F-AB769FBC09E4}"
