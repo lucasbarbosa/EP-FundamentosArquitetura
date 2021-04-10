@@ -96,10 +96,11 @@ Modificadores =>
 - Public: Acesso sem restrição
 - Protected: Utilizado apenas pela classe que está herdando.
 - Internal: Acesso limitado apenas ao assembly.
-- Protected Internal: Acesso limitado apenas ao assembly ou quem está herdando.
 - Private: Acesso limitado ao mesmo tipo, sendo métodos da mesma classe. No caso de uma classe não pode ser chamada diretamente.
-- Private Protected: Acesso limitado as classes que fazem herança ou estão dentro do mesmo assembly.
 - Sealed: Classe que nunca pode ser herdada, apenas instanciada.
+
+- Protected Internal: Acesso limitado apenas ao assembly ou quem está herdando.
+- Protected Private: Acesso limitado as classes que fazem herança ou estão dentro do mesmo assembly.
 
 
 Interface x Implementação => 
